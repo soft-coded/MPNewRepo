@@ -197,7 +197,7 @@ The blueprint of this *checker* that we thought of initially:
     * Need to calculate the distance between every two persons
 
 1. Mark the violations
-    * Need to mark the ones that violate social distacing norms
+    * Need to mark the ones that violate social distancing norms
 
 ### Proceedings
 
