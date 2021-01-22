@@ -200,7 +200,6 @@
 \newpage
 \setcounter{tocdepth}{2} % + subsections
 \tableofcontents
-\lfoot{IIEST, Shibpur}
 \newpage
 
 \pagenumbering{arabic}
@@ -282,6 +281,7 @@ working. These are:
               \item If a GPU is not being used, the CPU need to be good enough
           \end{itemize}
 \end{itemize}
+\pagebreak
 
 \section{THE PROJECT}
 \subsection{Software Used}
@@ -332,6 +332,7 @@ LaTeX was used to write this report. LaTeX is a software system for document
 preparation. When writing, the writer uses plain text as opposed to the formatted
 text found in "What You See Is What You Get" word processors like Microsoft Word
 or LibreOffice Writer.
+\pagebreak
 
 \subsection{The Program}
 
@@ -379,7 +380,7 @@ How we proceeded with the outlines of the blueprint:
                         \item It is tough to get our hands on the light footage of a security camera or the equivalent.
                         \item If the checker worked on recorded footage, it would work on live footage as well.
                     \end{itemize}
-                    \pagebreak
+
               \item The videos we ended up choosing:
                     \begin{figure}[h!]
                         \centering
@@ -395,13 +396,13 @@ How we proceeded with the outlines of the blueprint:
                         \label{fig1:stills}
                     \end{figure}
           \end{itemize}
-
+          \pagebreak
     \item Processing
-    \begin{itemize}[label={}]
-        \item We used the OpenCV library for our video/image processing. It is a really handy library that can be used for image processing, object detection and many other purposes.
-        \lstinputlisting[caption=A Sample Code To Count No. Of Frames in a Video, label=lst1:VideoFrames]{python scripts/total_frames.py}
-    \end{itemize}
-    
+          \begin{itemize}[label={}]
+              \item We used the OpenCV library for our video/image processing. It is a really handy library that can be used for image processing, object detection and many other purposes.
+                    \lstinputlisting[caption=A Sample Code To Count No. Of Frames in a Video, label=lst1:VideoFrames]{python scripts/total_frames.py}
+          \end{itemize}
+
     \item Detecting People
           \begin{itemize}
               \item For this we decided to go with the You Only Look Once (YOLO) algorithm for object detection. The algorithm itself is discussed a bit later in the report.
