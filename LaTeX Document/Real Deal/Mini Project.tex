@@ -428,4 +428,89 @@ How we proceeded with the outlines of the blueprint:
 
 \subsection{The YOLO Algorithm}
 
+\subsubsection{What is YOLO Algorithm?}
+
+\begin{itemize}
+    \item \textbf{YOLO (“You Only Look Once”)} is an effective real-time **object recognition** algorithm, first described in the seminal 2015 paper by Joseph Redmon et al\textcolor{green}{\href{https://arxiv.org/abs/1804.02767}{Paper Link}}.
+    \item \textbf{Image classification} done by YOLO algorithm aims at assigning an image to one of a number of different categories (e.g. car, dog, cat, human, etc.), essentially answering the question “What is in this picture?”. One image has only one category assigned to it.
+    \item \textbf{Object localization} then allows us to locate our object in the image, so our question changes to “Where is it?”.
+    \item \textbf{Object detection} provides the tools for doing just that –  finding all the objects in an image and drawing the so-called bounding boxes around them.
+    \item \textcolor{red}{// insert a picture of YOLO working here}
+\end{itemize}
+
+\subsubsection{Where does YOLO stand in the \textit{object detection algorithms} chart?}
+There are a few different algorithms for object detection and they can be split into two groups:
+\begin{enumerate}
+    \item \textbf{Algorithms based on classification}
+          \begin{itemize}[label={}]
+              \item They are implemented in two stages. First, they select regions of interest in an image. Second, they classify these regions using convolutional neural networks. This solution can be slow because we have to run predictions for every selected region. A widely known example of this type of algorithm is the Region-based convolutional neural network (RCNN) and its cousins Fast-RCNN, Faster-RCNN and the latest addition to the family: Mask-RCNN. Another example is RetinaNet.
+          \end{itemize}
+
+    \item \textbf{Algorithms based on regression}
+          \begin{itemize}[label={}]
+              \item Instead of selecting interesting parts of an image, these predict classes and bounding boxes for the whole image in one run of the algorithm. The two best known examples from this group are the \textbf{YOLO \textit{(it stands here)}} family algorithms and SSD (Single Shot Multibox Detector). They are commonly used for real-time object detection as, in general, they trade a bit of accuracy for large improvements in speed.
+          \end{itemize}
+\end{enumerate}
+
+\subsubsection{How does YOLO work?}
+\textcolor{green}{\href{https://appsilon.com/object-detection-yolo-algorithm/}{reference to the article}}
+To understand the YOLO algorithm, it is necessary to establish what is actually being predicted. Ultimately, we aim to predict a class of an object and the bounding box specifying object location. Each bounding box can be described using four descriptors:
+
+\begin{enumerate}
+    \item Center of a bounding box (bx,by)
+    \item Width (bw)
+    \item Height (bh)
+    \item Value corresponding to the class of an object (car,person,traffic lights etc)
+    \item The probability that there is an object bounding the box (pc)
+\end{enumerate}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\linewidth]{Pictures/yoloWorks1.png}
+    \caption{\textcolor{red}{insert source} Descriptions of a Bounding Box}
+    \label{fig2:descriptionOfBBox}
+\end{figure}
+
+Then, the image is split into cells, typically using a 19×19 grid. Each cell is responsible for predicting 5 bounding boxes (in case there are multiple objects in this cell). Therefore, we arrive at a large number of 1805 bounding boxes for one image.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\linewidth]{Pictures/yoloWorks2.png}
+    \caption{Cell Structure of an Image}
+    \label{fig3:StructImg}
+\end{figure}
+
+Most of these cells and bounding boxes will not contain an object. Therefore, the value pc is predicted, which serves to remove boxes with low object probability and bounding boxes with the highest shared area in a process called \textbf{non-maxima suppression}.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\linewidth]{Pictures/yoloWorks3.png}
+    \caption{Non-Maxima Suppression}
+    \label{fig4:NMS}
+\end{figure}
+\pagebreak
+\subsection{Darknet implementation of YOLO}
+There are a few different implementations of the YOLO algorithm on the web. Darknet is one such open source neural network framework. Darknet was written in the C Language and CUDAtechnology, which makes it really fast and provides for making computations on a GPU, which is essential for real-time predictions.
+
+The Darknet YOLO model that we used here is pre-trained on the COCO (Common Objects in Context) dataset. \textcolor{red}{// insert a reference to the model's website here}
+\newpage
+
+\section{SHORTCOMINGS}
+
+Like every other piece of software, this \textit{checker} is not perfect. It has its own limitations and shortcomings.
+
+\begin{enumerate}
+    \item \textbf{The camera that will record the feed needs to be placed at a position high enough} so that the \textit{viewing angle problem} can be avoided. Placing the camera at a horizontal level will not allow the checker to work correctly. For the lowest error margin, the camera needs to pe place perpendicular to the ground, which is not always possible.
+    \item \textbf{Enormous amount of computing power will be needed to make the algorithm work for a live footage}. Even for recorded footage, we were not able to get more than 5-7 frames per second with a decent GPU. This is due to the object detection algorithm taking time in detecting objects. It is not practical to use this \textit{checker} on a live feed.
+    \item \textbf{The minimum social distance needs to be known in pixels beforehand}. This is a lot more difficult than it sounds since a small change in viewing angle can bring a large change in the distance measurements. Plus it is not easy to calculate any distance in pixels. We ourselves have taken arbitrary values using trial and error here to make things work as they should.
+    \item \textbf{The algorithm will completely fail in overly populated areas}. This is due to how YOLO works. It sacrifices accuracy for speed, therefore it really struggles with multiple objects in a single \textit{cell}.
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=\linewidth]{Pictures/shibuya_bad_frame.png}
+        \caption{An Example Photo Of YOLO Object Detection Failing.}{The Big Red Box should not show as output}
+        \label{fig5:shibuyaFail}
+    \end{figure}
+    \item \textcolor{red}{// will insert more later, cant think of any rn}
+\end{enumerate}
+
 \end{document}
