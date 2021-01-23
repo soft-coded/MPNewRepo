@@ -294,3 +294,29 @@ How we proceeded with the outlines of the blueprint:
     1. **Algorithms based on regression**: Instead of selecting interesting parts of an image, these predict classes and bounding boxes for the whole image in one run of the algorithm. The two best known examples from this group are the **YOLO *(it stands here)*** family algorithms and SSD (Single Shot Multibox Detector). They are commonly used for real-time object detection as, in general, they trade a bit of accuracy for large improvements in speed. 
 
 * **How does YOLO work?**
+
+    [reference to the article](https://appsilon.com/object-detection-yolo-algorithm/)
+
+    * To understand the YOLO algorithm, it is necessary to establish what is actually being predicted. Ultimately, we aim to predict a class of an object and the bounding box specifying object location. Each bounding box can be described using four descriptors:
+        1. Center of a bounding box (bx,by)
+        1. Width (bw)
+        1. Height (bh)
+        1. Value corresponding to the class of an object (car,person,traffic lights etc)
+        1. The probability that there is an object bounding the box (pc)
+
+    // insert yoloWorks1.png here from the Real Deal/Pictures folder
+
+    * Then, the image is split into cells, typically using a 19×19 grid. Each cell is responsible for predicting 5 bounding boxes (in case there are multiple objects in this cell). Therefore, we arrive at a large number of 1805 bounding boxes for one image.
+
+    // insert yoloWorks2.png here
+
+    * Most of these cells and bounding boxes will not contain an object. Therefore, the value pc is predicted, which serves to remove boxes with low object probability and bounding boxes with the highest shared area in a process called **non-maxima suppression**.
+
+    // insert yoloWorks3.png here
+
+* **Darknet implementation of YOLO**
+
+    * There are a few different implementations of the YOLO algorithm on the web. Darknet is one such open source neural network framework. Darknet was written in the C Language and CUDAtechnology, which makes it really fast and provides for making computations on a GPU, which is essential for real-time predictions.
+
+    * The Darknet YOLO model that we used here is pre-trained on the COCO (Common Objects in COntext) dataset. // insert a reference to the model's website here
+
