@@ -109,7 +109,7 @@ range from mild to lethal. Mild illnesses in humans include some cases of the
 common cold (which is also caused by other viruses, predominantly rhinoviruses),
 while more lethal varieties can cause SARS, MERS, and COVID-19.
 
-With the increse in the spread of the dangerous and highly contagious **Novel**
+With the increase in the spread of the dangerous and highly contagious **Novel**
 **Coronavirus** and the underlying disease caused by it, **COVID-19**,
 it is a requirement now more than ever to follow the social distancing
 norms set in place by the scientists and researchers.
@@ -136,11 +136,11 @@ That is where out journey to build a social distance checker started.
 
 ## Outdoor requirements
 
-It is important to metion here that this is not a portable software that can
+It is important to mention here that this is not a portable software that can
 be fed any footage and just be expected to work. There need to be some
 calibration measures taken to actually get this software working:
 
-* Actually knowing the local social distaning norms
+* Actually knowing the local social distancing norms
     * The minimum distance set for social distancing by the local gov
 
 * Finding a good position for the camera
@@ -149,7 +149,7 @@ calibration measures taken to actually get this software working:
 * Knowing the required distance in pixels
     * This will depend on the position and angle of the camera's view
 
-## Indoor requirments
+## Indoor requirements
 
 The tools used to build this software are platform independent. However,
 there are a few requirements needed to be fulfilled to get the program
@@ -160,7 +160,7 @@ working. These are:
     * OpenCV - version 2 or above
     * numPy
 
-* Hardware accelartion
+* Hardware acceleration
     * A GPU is optional yet recommended to get the best performance
     * If a GPU is not being used, the CPU need to be good enough
 
@@ -238,7 +238,7 @@ The blueprint of this *checker* that we thought of initially:
     * Need to calculate the distance between every two persons
 
 1. Mark the violations
-    * Need to mark the ones that violate social distacing norms
+    * Need to mark the ones that violate social distancing norms
 
 ### Proceedings
 
@@ -262,7 +262,7 @@ How we proceeded with the outlines of the blueprint:
     * We did not train the object detection neural network model ourselves. We used the *insert model name* model because of time constraints.
     // insert some yolo code here lul
 
-1. Mesuring distance between each couple
+1. Measuring distance between each couple
     * This was undeniably the toughest part of the project and took the longest time. First we decided to go with measuring the distance between the centroids of every two detections. But that may not work in every condition since it depends on the placement of camera and the view angle from the ground and perpendicular to the ground.
     * A conversion of the 3-dimensional footage being fed to the algorithm to 2-dimensions was more than necessary to get the top view of every frame to avoid the *viewing angle problem*.
     * Enter **Bird's Eye View (BEV)**. This is what we called the top view of every frame. This was made possible by OpenCV's ``getPerspectiveTransform()`` and ``warpPerspective()`` functions.
@@ -320,3 +320,25 @@ How we proceeded with the outlines of the blueprint:
 
     * The Darknet YOLO model that we used here is pre-trained on the COCO (Common Objects in COntext) dataset. // insert a reference to the model's website here
 
+----------------New page-----------------
+# SHORTCOMINGS
+
+Like every other piece of software, this *checker* is not perfect. It has its own limitations and shortcomings.
+
+* **The camera that will record the feed needs to be placed at a position high enough** so that the *viewing angle problem* can be avoided. Placing the camera at a horizontal level will not allow the checker to work correctly. For the lowest error margin, the camera needs to pe place perpendicular to the ground, which is not always possible.
+
+* **Enormous amount of computing power will be needed to make the algorithm work for a live footage**. Even for recorded footage, we were not able to get more than 5-7 frames per second with a decent GPU. This is due to the object detection algorithm taking time in detecting objects. It is not practical to use this *checker* on a live feed.
+
+* **The minimum social distance needs to be known in pixels beforehand**. This is a lot more difficult than it sounds since a small change in viewing angle can bring a large change in the distance measurements. Plus it is not easy to calculate any distance in pixels. We ourselves have taken arbitrary values using trial and error here to make things work as they should.
+
+* **The algorithm will completely fail in overly populated areas**. This is due to how YOLO works. It sacrifices accuracy for speed, therefore it really struggles with multiple objects in a single *cell*. // may want to include a bad frame from shibuya.mp4 here
+
+// will insert more later, cant think of any rn
+
+## Solutions 
+
+A few of these limitations can be solved by adopting the following means:
+
+* Recording via a drone can completely eliminate the *viewing angle problem*, since a drone can be stabilised at exactly 90 degrees to the ground. Indoors, a camera at the center of the ceiling will work wonders.
+
+* The *checker* can work in densely populated areas as well if we use RCNN or any classification based algorithm. But that will further slow down the algorithm.
