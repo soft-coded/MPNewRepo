@@ -341,4 +341,28 @@ A few of these limitations can be solved by adopting the following means:
 
 * Recording via a drone can completely eliminate the *viewing angle problem*, since a drone can be stabilised at exactly 90 degrees to the ground. Indoors, a camera at the center of the ceiling will work wonders.
 
-* The *checker* can work in densely populated areas as well if we use RCNN or any classification based algorithm. But that will further slow down the algorithm.
+* The minimum social distance can itself be calculated using neural networks. But, of course, this will needlessly complicate the entire process.
+
+* The *checker* can work in densely populated areas as well if we use RCNN or any classification based algorithm. But that will further slow down the *checker* since RCNN is a much slower algorithm than YOLO.
+
+------------New page------------
+
+# HENCEFORTH
+
+While keeping the limitations in mind, this app does serve well as a starting point for an automated social distance checker. The tedious process that needed to be done manually can now be done by a software. This is undoubtedly music to the ears of any software developer and enthusiast.
+
+With that being said, here is how we can improve the *checker*:
+
+* We can make the entire thing command line based so that an average consumer will not have to dig around the code to calibrate the algorithm to his or her needs.
+
+* We can (and will) train our own model of YOLO that will only be used to detect people. This can tremendously increase the speed and bring down the processing power requirements.
+
+* We can add a help panel for first time users.
+
+// will add more later, suggest something to add
+
+# REFERENCES
+
+// will fill this up at the very end
+
+## -------------finish------------------
