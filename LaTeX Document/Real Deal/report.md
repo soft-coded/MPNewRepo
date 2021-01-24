@@ -132,6 +132,26 @@ That is where out journey to build a social distance checker started.
 
 --------------------New Page-------------------
 
+# KNOWLEDGE REFINEMENT
+
+Before we settled on the topic of object detection and started building this project, we got some practice, which was necessary since we were going to dip our toes in image processing.
+
+## Histogram
+
+* We made histograms for grey-level images. This was done using both the OpenCV's ``ravel()`` function and our own implementation of it, called ``compute_histogram()``.
+
+// insert the compute_histogram vs ravel image here from the 2nd ppt
+
+* Once that was over, we moved onto some Image Enhancement skills. Here we implemented noise reduction functions using mean, mode and median filters.
+
+// I leave it upto you what images to insert here from ppt 3.
+
+* Then we implemented Otsu's thresholding algorithm using minimisation of within class variance approach. 
+
+// insert otsu's code here
+
+// I think this much useless information should be enough. Really dont want to spend time on this
+
 # PREREQUISITES
 
 ## Outdoor requirements
@@ -366,3 +386,6 @@ With that being said, here is how we can improve the *checker*:
 // will fill this up at the very end
 
 ## -------------finish------------------
+
+// additional material:
+// histogram shit is added before "PREREQUISITES" section
