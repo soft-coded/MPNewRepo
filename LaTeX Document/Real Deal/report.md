@@ -361,8 +361,6 @@ A few of these limitations can be solved by adopting the following means:
 
 * Recording via a drone can completely eliminate the *viewing angle problem*, since a drone can be stabilised at exactly 90 degrees to the ground. Indoors, a camera at the center of the ceiling will work wonders.
 
-* The minimum social distance can itself be calculated using neural networks. But, of course, this will needlessly complicate the entire process.
-
 * The *checker* can work in densely populated areas as well if we use RCNN or any classification based algorithm. But that will further slow down the *checker* since RCNN is a much slower algorithm than YOLO.
 
 ------------New page------------
