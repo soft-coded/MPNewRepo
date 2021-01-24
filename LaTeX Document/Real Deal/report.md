@@ -61,7 +61,7 @@ appropriate guidance and necessary criticism.
 
 We would pass our token of token of gratitude to the department of cst as well for providing
 us with the opportunity to be able to tackle real world problems while improving
-our problem solving ability and thinking capacity by organising this project. We all have
+our problem solving ability and thinking capacity by organizing this project. We all have
 learnt quite a handful of new skills and are eager to use them henceforth as well.
 
 **} content**
@@ -117,7 +117,7 @@ norms set in place by the scientists and researchers.
 But as we all know, India is a country with a not-so-small population,
 so it is pretty understandable and obvious that the law enforcement will
 not be able to actually enforce it on every single person. Therefore,
-new means of automata in place of actual individuals is a no brainer.
+new means of automata in place of actual individuals is a no brainier.
 That is where we come in.
 
 ## Idea behind.......
@@ -146,7 +146,7 @@ Before we settled on the topic of object detection and started building this pro
 
 // I leave it upto you what images to insert here from ppt 3.
 
-* Then we implemented Otsu's thresholding algorithm using minimisation of within class variance approach. 
+* Then we implemented Otsu's thresholding algorithm using minimization of within class variance approach. 
 
 // insert otsu's code here
 
@@ -359,7 +359,7 @@ Like every other piece of software, this *checker* is not perfect. It has its ow
 
 A few of these limitations can be solved by adopting the following means:
 
-* Recording via a drone can completely eliminate the *viewing angle problem*, since a drone can be stabilised at exactly 90 degrees to the ground. Indoors, a camera at the center of the ceiling will work wonders.
+* Recording via a drone can completely eliminate the *viewing angle problem*, since a drone can be stabilized at exactly 90 degrees to the ground. Indoors, a camera at the center of the ceiling will work wonders.
 
 * The *checker* can work in densely populated areas as well if we use RCNN or any classification based algorithm. But that will further slow down the *checker* since RCNN is a much slower algorithm than YOLO.
 
