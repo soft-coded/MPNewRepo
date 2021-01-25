@@ -370,9 +370,9 @@ A few of these limitations can be solved by adopting the following means:
     * So we decided to try various different values of the NMS threshold. A few of the terms that we used in our NMS analysis are:
         * **Bad Frame**: This is a frame in which the algorithm fails to correctly identify people and instead gives a horrible big box as the output.
         // may want to include a bad frame here
-        * **Total Frames**: This is the number of total frames in the entire video or the length of the video to be taken under consideration.
+        * **Total Frames**: This is the number of total frames in the entire video or the length of the video to be analysed.
         * **Performance Ratio**: This is simply (Number of Bad Frames)/(Total Frames).
-        * **Object threshold**: This is the confidence value for which a detection is actually considered. Any detection with confidence (p<sub>c</sub>) above this value is taken into consideration.
+        * **Object threshold**: This is the confidence value for which a detection is actually considered. Any detection with confidence (p<sub>c</sub>) equal to or above this value is taken into consideration.
     * From this it was clear that the threshold value for which the Performance Ratio will be the lowest would be the best value. We also tinkered with the Object Threshold to get the best possible outcome. The script that we wrote for this was:
     // insert the "Main" part from performance_analysis.ipynb here
     * After running the test for a number of threshold values, we got this graph:
