@@ -495,7 +495,7 @@ How we proceeded with the outlines of the blueprint:
     \item Processing
           \begin{itemize}[label={}]
               \item We used the OpenCV library for our video/image processing. It is a really handy library that can be used for image processing, object detection and many other purposes.
-                    \lstinputlisting[caption=A Sample Code To Count No. Of Frames in a Video, label=lst1:VideoFrames]{python scripts/total_frames.py}
+                    \lstinputlisting[caption=A Sample Code To Count No. Of Frames in a Video, label=lst:VideoFrames]{python scripts/total_frames.py}
           \end{itemize}
 
     \item Detecting People
@@ -509,9 +509,9 @@ How we proceeded with the outlines of the blueprint:
               \item This was undeniably the toughest part of the project and took the longest time. First we decided to go with measuring the distance between the centroids of every two detections. But that may not work in every condition since it depends on the placement of camera and the view angle from the ground and perpendicular to the ground.
               \item A conversion of the 3-dimensional footage being fed to the algorithm to 2-dimensions was more than necessary to get the top view of every frame to avoid the \textit{viewing angle problem}.
               \item Enter \textbf{Bird's Eye View (BEV)}. This is what we called the top view of every frame. This was made possible by OpenCV's \textcolor{brown}{\texttt{getPerspectiveTransform()}} and \textcolor{brown}{\texttt{warpPerspective()}} functions.
-                    \lstinputlisting[caption=Function Bird's Eye Perspective Transformation Matrix, label=lst2:BirdsEyePerspective]{python scripts/birds_eye_perspective.py}
+                    \lstinputlisting[caption=Function Bird's Eye Perspective Transformation Matrix, label=lst:BirdsEyePerspective]{python scripts/birds_eye_perspective.py}
               \item \textcolor{green}{\href{https://cseweb.ucsd.edu/classes/wi07/cse252a/homography_estimation/homography_estimation.pdf}{homography estimation pdf}} This piece of code essentially calculates what is called a \textit{transformation matrix}  for the supplied image (frame) which can then be used to get the centroids of the points as seen from a vertical position directly above the center of the rectangle passed to the function.
-                    \lstinputlisting[caption=Function which convert co-ordinates to it's bird's view co-ordinate, label=lst3:birdsEyeAllign]{python scripts/birds_eye_allignment.py}
+                    \lstinputlisting[caption=Function which convert co-ordinates to it's bird's view co-ordinate, label=lst:birdsEyeAllign]{python scripts/birds_eye_allignment.py}
               \item We used these functions to get a two dimensional view of every frame and calculate distance between every pair of detections (people).
           \end{itemize}
 
@@ -532,8 +532,9 @@ How we proceeded with the outlines of the blueprint:
     \item \textbf{Object detection} provides the tools for doing just that –  finding all the objects in an image and drawing the so-called bounding boxes around them.
     \begin{figure}[h!]
         \centering
-        \includegraphics[width=0.5\linewidth]{Pictures/Detected-with-YOLO--Schreibtisch-mit-Objekten.jpg}
+        \includegraphics[width=0.4\linewidth]{Pictures/Detected-with-YOLO--Schreibtisch-mit-Objekten.jpg}
         \caption{\textcolor{green}{\href{https://en.wikipedia.org/wiki/Object_detection}{Photo Source}} Sample Output Of YOLOv3}
+        \label{fig:YOLOv3Sample}
     \end{figure}
 \end{itemize}
 
@@ -556,9 +557,9 @@ There are a few different algorithms for object detection and they can be split 
 To understand the YOLO algorithm, it is necessary to establish what is actually being predicted. Ultimately, we aim to predict a class of an object and the bounding box specifying object location. Each bounding box can be described using four descriptors:
 
 \begin{enumerate}
-    \item Center of a bounding box (bx,by)
-    \item Width (bw)
-    \item Height (bh)
+    \item Center of a bounding box $(b_x,b_y)$
+    \item Width $(b_w)$
+    \item Height $(b_h)$
     \item Value corresponding to the class of an object (car,person,traffic lights etc)
     \item The probability that there is an object bounding the box (pc)
 \end{enumerate}
@@ -579,7 +580,7 @@ Then, the image is split into cells, typically using a 19×19 grid. Each cell is
     \label{fig:StructImg}
 \end{figure}
 
-Most of these cells and bounding boxes will not contain an object. Therefore, the value pc is predicted, which serves to remove boxes with low object probability and bounding boxes with the highest shared area in a process called \textbf{non-maxima suppression}.
+Most of these cells and bounding boxes will not contain an object. Therefore, the value $p_c$ is predicted, which serves to remove boxes with low object probability and bounding boxes with the highest shared area in a process called \textbf{non-maxima suppression}.
 
 \begin{figure}[h!]
     \centering
@@ -618,6 +619,31 @@ A few of these limitations can be solved by adopting the following means:
 \begin{enumerate}
     \item Recording via a drone can completely eliminate the \textit{viewing angle problem}, since a drone can be stabilized at exactly 90 degrees to the ground. Indoors, a camera at the center of the ceiling will work wonders.
     \item The \textit{checker} can work in densely populated areas as well if we use RCNN or any classification based algorithm. But that will further slow down the \textit{checker} since RCNN is a much slower algorithm than YOLO.
+    \item \textbf{Non-Maxima Suppression Analysis}
+    \begin{itemize}
+        \item To make the algorithm work in relatively dense and overpopulated areas, we were suggested to adjust the Non-Maxima Suppression (NMS) threshold by Prof. Samit Biswas. 
+        \item So we decided to try various different values of the NMS threshold. A few of the terms that we used in our NMS analysis are:
+        \begin{itemize}
+            \item \textbf{Bad Frame}: This is a frame in which the algorithm fails to correctly identify people and instead gives a horrible big box as the output.
+            \item \textbf{Total Frames}: This is the number of total frames in the entire video or the length of the video to be analysed.
+            \item \textbf{Performance Ratio}: This is simply (Number Of Bad Frames)/(Total Frames)
+            \item \textbf{Object Threshold}: This is the confidence value for which a detection is actually considered. Any detection with confidence $p_c$ equal to or above this value is taken into consideration.
+        \end{itemize}
+        \item From this it was clear that the threshold value for which the Performance Ratio will be the lowest would be the best value. We also tinkered with the Object Threshold to get the best possible outcome. The script that we wrote for this was:
+        \lstinputlisting[caption=NMS Analysis for \textit{"shibuya\_100frames.mp4"}, label=lst:NMS]{python scripts/NMS Analysis.py}
+        \pagebreak
+        \item After running the test for a number of threshold values, we got this graph:
+        \begin{figure}[h]
+            \centering
+            \includegraphics[width=\linewidth]{Pictures/NMS vs Performance.png}
+            \caption{NMS vs. Performance Ratio}
+            \label{fig:NMSvsPerf}
+        \end{figure}
+        \item From this, we can see that the algorithm gives the best results for NMS threshold around 0.010 to 0.014 and for the Object threshold greater than 0.9.
+        \item Of course, this is not ideal since \textbf{it will ignore most of the detections}.
+        \item So we found a sweet spot at NMS threshold as 0.012 and Object Threshold as 0.75
+        \item It should be noted that this Analysis will be different for different Camera Feeds.
+    \end{itemize}
 \end{enumerate}
 
 \pagebreak
