@@ -61,6 +61,8 @@
 
 \usepackage{hyperref}
 
+\usepackage[nottoc]{tocbibind}
+
 \begin{document}
 \begin{titlepage}
     \begin{tikzpicture}[overlay,remember picture]
@@ -248,7 +250,7 @@ Before we settled on the topic of object detection and started building this pro
         \begin{subfigure}[b]{\linewidth}
             \centering
             \includegraphics[width=0.3\linewidth]{Pictures/histogram/greyscale.png}
-            \caption{Greyscale Image \textcolor{green}{reference to image}}
+            \caption{Greyscale \href{https://www.publicdomainpictures.net/en/view-image.php?image=5675&amp;picture=flowers-6}{Image}}
         \end{subfigure}
         \begin{subfigure}[b]{0.4\linewidth}
             \centering
@@ -324,7 +326,7 @@ Before we settled on the topic of object detection and started building this pro
 
     \pagebreak
 
-    \item Then we implemented Otsu's thresholding algorithm \textcolor{green}{\href{https://cw.fel.cvut.cz/wiki/_media/courses/a6m33bio/otsu.pdf}{Otsu IEEE Doc}}using minimization of within class variance approach. 
+    \item Then we implemented Otsu's Thresholding algorithm \cite{4310076} using minimization of within class variance approach. 
 
     \lstinputlisting[caption=Our Implementation Of Otsu's Thresholding Algorithm, label=lst:Otsu Algo]{python scripts/otsu_thresholding.py}
     
@@ -391,7 +393,7 @@ interpreter, or both; others, do not.
 
 We used PyCharm as our IDE, as it was easy to set up and code
 
-\textcolor{green}{wikipedia reference}PyCharm is an integrated development environment (IDE) used in computer programming, specifically for the Python language. It is developed by the Czech company JetBrains. It provides code analysis, a graphical debugger, an integrated unit tester, integration with version control systems (VCSes), and supports web development with Django as well as data science with Anaconda.
+\href{https://www.jetbrains.com/pycharm/}{PyCharm} is an integrated development environment (IDE) used in computer programming, specifically for the Python language. It is developed by the Czech company JetBrains. It provides code analysis, a graphical debugger, an integrated unit tester, integration with version control systems (VCSes), and supports web development with Django as well as data science with Anaconda.
 
 \subsubsection{Python}
 Python is an interpreted, high-level and general-purpose programming language.
@@ -422,8 +424,8 @@ Google colab is an online iPython development environment similar to
 Jupyter Notebook. It uses CUDA acceleration to speed up processes, so we
 switched to it rather than continuing development
 
-\subsubsection{LaTeX}
-LaTeX was used to write this report. LaTeX is a software system for document
+\subsubsection{\LaTeX}
+\LaTeX was used to write this report. \LaTeX is a software system for document
 preparation. When writing, the writer uses plain text as opposed to the formatted
 text found in "What You See Is What You Get" word processors like Microsoft Word
 or LibreOffice Writer.
@@ -501,7 +503,7 @@ How we proceeded with the outlines of the blueprint:
     \item Detecting People
           \begin{itemize}
               \item For this we decided to go with the You Only Look Once (YOLO) algorithm for object detection. The algorithm itself is discussed a bit later in the report.
-              \item We did not train the object detection neural network model ourselves. We used the prebuilt model, trained by the Darknet team \textcolor{green}{https://pjreddie.com/darknet/yolo/} because of time constraints.
+              \item We did not train the object detection neural network model ourselves. We used the prebuilt model, trained by the \href{https://pjreddie.com/darknet/yolo/}{Darknet} team because of time constraints.
           \end{itemize}
 
     \item Measuring distance between each couple
@@ -510,7 +512,7 @@ How we proceeded with the outlines of the blueprint:
               \item A conversion of the 3-dimensional footage being fed to the algorithm to 2-dimensions was more than necessary to get the top view of every frame to avoid the \textit{viewing angle problem}.
               \item Enter \textbf{Bird's Eye View (BEV)}. This is what we called the top view of every frame. This was made possible by OpenCV's \textcolor{brown}{\texttt{getPerspectiveTransform()}} and \textcolor{brown}{\texttt{warpPerspective()}} functions.
                     \lstinputlisting[caption=Function Bird's Eye Perspective Transformation Matrix, label=lst:BirdsEyePerspective]{python scripts/birds_eye_perspective.py}
-              \item \textcolor{green}{\href{https://cseweb.ucsd.edu/classes/wi07/cse252a/homography_estimation/homography_estimation.pdf}{homography estimation pdf}} This piece of code essentially calculates what is called a \textit{transformation matrix}  for the supplied image (frame) which can then be used to get the centroids of the points as seen from a vertical position directly above the center of the rectangle passed to the function.
+              \item This piece of code essentially calculates what is called a \textit{transformation matrix}\cite{kriegman2007homography} for the supplied image (frame) which can then be used to get the centroids of the points as seen from a vertical position directly above the center of the rectangle passed to the function.
                     \lstinputlisting[caption=Function which convert co-ordinates to it's bird's view co-ordinate, label=lst:birdsEyeAllign]{python scripts/birds_eye_allignment.py}
               \item We used these functions to get a two dimensional view of every frame and calculate distance between every pair of detections (people).
           \end{itemize}
@@ -526,14 +528,14 @@ How we proceeded with the outlines of the blueprint:
 \subsubsection{What is YOLO Algorithm?}
 
 \begin{itemize}
-    \item \textbf{YOLO (“You Only Look Once”)} is an effective real-time \textbf{object recognition} algorithm, first described in the seminal 2015 paper by Joseph Redmon et al\textcolor{green}{\href{https://arxiv.org/abs/1804.02767}{2016 Update Paper}} \textcolor{green}{\href{https://arxiv.org/abs/1506.02640}{2015 main paper}}.
+    \item \textbf{YOLO (“You Only Look Once”)}\cite{redmon2016look}\cite{redmon2018yolov3} is an effective real-time \textbf{object recognition} algorithm, first described in the seminal 2015 paper by Joseph Redmon et al.
     \item \textbf{Image classification} done by YOLO algorithm aims at assigning an image to one of a number of different categories (e.g. car, dog, cat, human, etc.), essentially answering the question “What is in this picture?”. One image has only one category assigned to it.
     \item \textbf{Object localization} then allows us to locate our object in the image, so our question changes to “Where is it?”.
     \item \textbf{Object detection} provides the tools for doing just that –  finding all the objects in an image and drawing the so-called bounding boxes around them.
     \begin{figure}[h!]
         \centering
         \includegraphics[width=0.4\linewidth]{Pictures/Detected-with-YOLO--Schreibtisch-mit-Objekten.jpg}
-        \caption{\textcolor{green}{\href{https://en.wikipedia.org/wiki/Object_detection}{Photo Source}} Sample Output Of YOLOv3}
+        \caption{\href{https://en.wikipedia.org/wiki/Object_detection}{Sample Output}  Of YOLOv3}
         \label{fig:YOLOv3Sample}
     \end{figure}
 \end{itemize}
@@ -552,8 +554,7 @@ There are a few different algorithms for object detection and they can be split 
           \end{itemize}
 \end{enumerate}
 
-\subsubsection{How does YOLO work?}
-\textcolor{green}{\href{https://appsilon.com/object-detection-yolo-algorithm/}{reference to the article}}
+\subsubsection{How does YOLO work?\cite{appsilon_2020}}
 To understand the YOLO algorithm, it is necessary to establish what is actually being predicted. Ultimately, we aim to predict a class of an object and the bounding box specifying object location. Each bounding box can be described using four descriptors:
 
 \begin{enumerate}
@@ -567,7 +568,7 @@ To understand the YOLO algorithm, it is necessary to establish what is actually 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.9\linewidth]{Pictures/yoloWorks1.png}
-    \caption{\textcolor{green}{\href{https://appsilon.com/object-detection-yolo-algorithm/}{source}} Descriptions of a Bounding Box}
+    \caption{Descriptions of a Bounding Box}
     \label{fig:descriptionOfBBox}
 \end{figure}
 
@@ -576,7 +577,7 @@ Then, the image is split into cells, typically using a 19×19 grid. Each cell is
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.9\linewidth]{Pictures/yoloWorks2.png}
-    \caption{\textcolor{green}{\href{https://appsilon.com/object-detection-yolo-algorithm/}{source}}Cell Structure of an Image}
+    \caption{Cell Structure of an Image}
     \label{fig:StructImg}
 \end{figure}
 
@@ -585,14 +586,14 @@ Most of these cells and bounding boxes will not contain an object. Therefore, th
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.9\linewidth]{Pictures/yoloWorks3.png}
-    \caption{\textcolor{green}{\href{https://appsilon.com/object-detection-yolo-algorithm/}{Source}}Non-Maxima Suppression}
+    \caption{Non-Maxima Suppression}
     \label{fig:NMS}
 \end{figure}
 \pagebreak
 \subsection{Darknet implementation of YOLO}
 There are a few different implementations of the YOLO algorithm on the web. Darknet is one such open source neural network framework. Darknet was written in the C Language and CUDAtechnology, which makes it really fast and provides for making computations on a GPU, which is essential for real-time predictions.
 
-The Darknet YOLO model that we used here is pre-trained on the COCO (Common Objects in Context) dataset. It can be downloaded here \textcolor{green}{\href{https://pjreddie.com/darknet/yolo/}{here}}
+The Darknet YOLO model that we used here is pre-trained on the COCO (Common Objects in Context) dataset. It can be downloaded \href{https://pjreddie.com/darknet/yolo/}{here}
 \newpage
 
 \section{SHORTCOMINGS}
@@ -660,6 +661,8 @@ With that being said, here is how we can improve the \textit{checker}:
     \item We can add a help panel for first time users.
 \end{enumerate}
 
-\textcolor{red}{add references}
+\bibliographystyle{ieeetr}
+\bibliography{mp}
+
 
 \end{document}
