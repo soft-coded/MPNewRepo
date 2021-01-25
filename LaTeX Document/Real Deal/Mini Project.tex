@@ -7,7 +7,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \lhead{}
-\rhead{\textcolor{red}{Mini Project Title}}
+\rhead{Social Distancing Using Object Detection}
 \lfoot{Department of Computer Engineering}
 
 \usepackage{lipsum}
@@ -91,7 +91,7 @@
         \textup{\large A MINI-PROJECT REPORT SUBMITTED IN PARTIAL FULFILLMENT OF THE REQUIREMENTS\\[0.4cm]ON}\\[0.4cm]
 
         \begin{LARGE}
-            {\textbf {\textcolor{red}{"MINI PROJECT TITLE"}}}
+            {\textbf {"SOCIAL DISTANCING USING \\[0.1cm]OBJECT DETECTION"}}
         \end{LARGE}\\[1cm]
 
         \textit{SUBMITTED BY}\\[0.3cm]
@@ -144,7 +144,7 @@
         \end{LARGE}\\[1.2cm]
     \end{center}
 
-    It is certified hereby that this report, titled *whatever the title is*, and all the attached
+    It is certified hereby that this report, titled \textit{”Social Distancing Using Object Detection”}, and all the attached
     documents herewith are authentic records of Abhinaba Chowdhury (510519007),\\Abhiroop Mukherjee (510510109), Debarghya Dey (510519087),
     Jyotiprakash Roy \\(510519016), and Shrutanten (510519048) from the Prestigious Department of \\Computer Science And Technology
     of the Distinguished and Respected IIEST Shibpur under my guidance.
@@ -233,7 +233,6 @@ which of the people present in the footage are actually following the social
 distancing norms and which of them are not, and mark either one appropriately.
 That is where out journey to build a social distance checker started.
 
-\textcolor{red}{// will add more later probably lul}
 \pagebreak
 
 \section{KNOWLEDGE REFINEMENT}
@@ -527,11 +526,15 @@ How we proceeded with the outlines of the blueprint:
 \subsubsection{What is YOLO Algorithm?}
 
 \begin{itemize}
-    \item \textbf{YOLO (“You Only Look Once”)} is an effective real-time **object recognition** algorithm, first described in the seminal 2015 paper by Joseph Redmon et al\textcolor{green}{\href{https://arxiv.org/abs/1804.02767}{Paper Link}}.
+    \item \textbf{YOLO (“You Only Look Once”)} is an effective real-time \textbf{object recognition} algorithm, first described in the seminal 2015 paper by Joseph Redmon et al\textcolor{green}{\href{https://arxiv.org/abs/1804.02767}{2016 Update Paper}} \textcolor{green}{\href{https://arxiv.org/abs/1506.02640}{2015 main paper}}.
     \item \textbf{Image classification} done by YOLO algorithm aims at assigning an image to one of a number of different categories (e.g. car, dog, cat, human, etc.), essentially answering the question “What is in this picture?”. One image has only one category assigned to it.
     \item \textbf{Object localization} then allows us to locate our object in the image, so our question changes to “Where is it?”.
     \item \textbf{Object detection} provides the tools for doing just that –  finding all the objects in an image and drawing the so-called bounding boxes around them.
-    \item \textcolor{red}{// insert a picture of YOLO working here}
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=0.5\linewidth]{Pictures/Detected-with-YOLO--Schreibtisch-mit-Objekten.jpg}
+        \caption{\textcolor{green}{\href{https://en.wikipedia.org/wiki/Object_detection}{Photo Source}} Sample Output Of YOLOv3}
+    \end{figure}
 \end{itemize}
 
 \subsubsection{Where does YOLO stand in the \textit{object detection algorithms} chart?}
@@ -562,8 +565,8 @@ To understand the YOLO algorithm, it is necessary to establish what is actually 
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=\linewidth]{Pictures/yoloWorks1.png}
-    \caption{\textcolor{red}{insert source} Descriptions of a Bounding Box}
+    \includegraphics[width=0.9\linewidth]{Pictures/yoloWorks1.png}
+    \caption{\textcolor{green}{\href{https://appsilon.com/object-detection-yolo-algorithm/}{source}} Descriptions of a Bounding Box}
     \label{fig:descriptionOfBBox}
 \end{figure}
 
@@ -571,8 +574,8 @@ Then, the image is split into cells, typically using a 19×19 grid. Each cell is
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=\linewidth]{Pictures/yoloWorks2.png}
-    \caption{Cell Structure of an Image}
+    \includegraphics[width=0.9\linewidth]{Pictures/yoloWorks2.png}
+    \caption{\textcolor{green}{\href{https://appsilon.com/object-detection-yolo-algorithm/}{source}}Cell Structure of an Image}
     \label{fig:StructImg}
 \end{figure}
 
@@ -580,15 +583,15 @@ Most of these cells and bounding boxes will not contain an object. Therefore, th
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=\linewidth]{Pictures/yoloWorks3.png}
-    \caption{Non-Maxima Suppression}
+    \includegraphics[width=0.9\linewidth]{Pictures/yoloWorks3.png}
+    \caption{\textcolor{green}{\href{https://appsilon.com/object-detection-yolo-algorithm/}{Source}}Non-Maxima Suppression}
     \label{fig:NMS}
 \end{figure}
 \pagebreak
 \subsection{Darknet implementation of YOLO}
 There are a few different implementations of the YOLO algorithm on the web. Darknet is one such open source neural network framework. Darknet was written in the C Language and CUDAtechnology, which makes it really fast and provides for making computations on a GPU, which is essential for real-time predictions.
 
-The Darknet YOLO model that we used here is pre-trained on the COCO (Common Objects in Context) dataset. \textcolor{red}{// insert a reference to the model's website here}
+The Darknet YOLO model that we used here is pre-trained on the COCO (Common Objects in Context) dataset. It can be downloaded here \textcolor{green}{\href{https://pjreddie.com/darknet/yolo/}{here}}
 \newpage
 
 \section{SHORTCOMINGS}
@@ -602,11 +605,10 @@ Like every other piece of software, this \textit{checker} is not perfect. It has
     \item \textbf{The algorithm will completely fail in overly populated areas}. This is due to how YOLO works. It sacrifices accuracy for speed, therefore it really struggles with multiple objects in a single \textit{cell}.
     \begin{figure}[h]
         \centering
-        \includegraphics[width=\linewidth]{Pictures/shibuya_bad_frame.png}
+        \includegraphics[width=0.8\linewidth]{Pictures/shibuya_bad_frame.png}
         \caption{An Example Photo Of YOLO Object Detection Failing.}{The Big Red Box should not show as output}
         \label{fig:shibuyaFail}
     \end{figure}
-    \item \textcolor{red}{// will insert more later, cant think of any rn}
 \end{enumerate}
 
 \subsection{Solutions}
@@ -615,7 +617,7 @@ A few of these limitations can be solved by adopting the following means:
 
 \begin{enumerate}
     \item Recording via a drone can completely eliminate the \textit{viewing angle problem}, since a drone can be stabilized at exactly 90 degrees to the ground. Indoors, a camera at the center of the ceiling will work wonders.
-    \item The *checker* can work in densely populated areas as well if we use RCNN or any classification based algorithm. But that will further slow down the \textit{checker} since RCNN is a much slower algorithm than YOLO.
+    \item The \textit{checker} can work in densely populated areas as well if we use RCNN or any classification based algorithm. But that will further slow down the \textit{checker} since RCNN is a much slower algorithm than YOLO.
 \end{enumerate}
 
 \pagebreak
@@ -630,7 +632,6 @@ With that being said, here is how we can improve the \textit{checker}:
     \item We can make the entire thing command line based so that an average consumer will not have to dig around the code to calibrate the algorithm to his or her needs.
     \item We can (and will) train our own model of YOLO that will only be used to detect people. This can tremendously increase the speed and bring down the processing power requirements
     \item We can add a help panel for first time users.
-    \item \textcolor{red}{// will add more later, suggest something to add}
 \end{enumerate}
 
 \textcolor{red}{add references}
