@@ -318,11 +318,11 @@ How we proceeded with the outlines of the blueprint:
     [reference to the article](https://appsilon.com/object-detection-yolo-algorithm/)
 
     * To understand the YOLO algorithm, it is necessary to establish what is actually being predicted. Ultimately, we aim to predict a class of an object and the bounding box specifying object location. Each bounding box can be described using four descriptors:
-        1. Center of a bounding box (bx,by)
-        1. Width (bw)
-        1. Height (bh)
+        1. Center of a bounding box (b<sub>x</sub>,b<sub>y</sub>)
+        1. Width of the bounding box (b<sub>w</sub>)
+        1. Height of the bounding box (b<sub>h</sub>)
         1. Value corresponding to the class of an object (car,person,traffic lights etc)
-        1. The probability that there is an object bounding the box (pc)
+        1. The probability (confidence value) that there is an object bounding the box (p<sub>c</sub>)
 
     // insert yoloWorks1.png here from the Real Deal/Pictures folder
 
@@ -363,6 +363,23 @@ A few of these limitations can be solved by adopting the following means:
 
 * The *checker* can work in densely populated areas as well if we use RCNN or any classification based algorithm. But that will further slow down the *checker* since RCNN is a much slower algorithm than YOLO.
 
+* **Non-Maxima Suppression Analysis**
+
+    * To make the algorithm work in relatively dense and overpopulated areas, we were suggested to adjust the Non-Maxima Suppression (NMS) threshold by Prof. Samit Biswas. 
+
+    * So we decided to try various different values of the NMS threshold. A few of the terms that we used in our NMS analysis are:
+        * **Bad Frame**: This is a frame in which the algorithm fails to correctly identify people and instead gives a horrible big box as the output.
+        // may want to include a bad frame here
+        * **Total Frames**: This is the number of total frames in the entire video or the length of the video to be taken under consideration.
+        * **Performance Ratio**: This is simply (Number of Bad Frames)/(Total Frames).
+        * **Object threshold**: This is the confidence value for which a detection is actually considered. Any detection with confidence (p<sub>c</sub>) above this value is taken into consideration.
+    * From this it was clear that the threshold value for which the Performance Ratio will be the lowest would be the best value. We also tinkered with the Object Threshold to get the best possible outcome. The script that we wrote for this was:
+    // insert the "Main" part from performance_analysis.ipynb here
+    * After running the test for a number of threshold values, we got this graph:
+    // insert the graph here 
+    * From this, we can see that the algorithm gives the best results for NMS threshold around 0.010 to 0.014 and for the Object threshold greater than 0.9.
+    * Of course, this is not ideal since **it will ignore most of the detections**.
+
 ------------New page------------
 
 # HENCEFORTH
@@ -387,3 +404,5 @@ With that being said, here is how we can improve the *checker*:
 
 // additional material:
 // histogram shit is added before "PREREQUISITES" section
+// NMS analysis has been added to Solutions section
+// changes have been made to "how yolo works" section's first paragraph
