@@ -7,7 +7,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \lhead{}
-\rhead{Social Distancing Using Object Detection}
+\rhead{Object Recognition to keep Social Distancing Norms in check}
 \lfoot{Department of Computer Engineering}
 
 \usepackage{lipsum}
@@ -93,7 +93,7 @@
         \textup{\large A MINI-PROJECT REPORT SUBMITTED IN PARTIAL FULFILLMENT OF THE REQUIREMENTS\\[0.4cm]ON}\\[0.4cm]
 
         \begin{LARGE}
-            {\textbf {"SOCIAL DISTANCING USING \\[0.1cm]OBJECT DETECTION"}}
+            {\textbf {"OBJECT RECOGNITION TO KEEP\\[0.1cm]SOCIAL DISTANCING NORMS IN CHECK"}}
         \end{LARGE}\\[1cm]
 
         \textit{SUBMITTED BY}\\[0.3cm]
@@ -146,7 +146,7 @@
         \end{LARGE}\\[1.2cm]
     \end{center}
 
-    It is certified hereby that this report, titled \textit{”Social Distancing Using Object Detection”}, and all the attached
+    It is certified hereby that this report, titled \textit{”Object Recognition to keep Social Distancing Norms in check”}, and all the attached
     documents herewith are authentic records of Abhinaba Chowdhury (510519007),\\Abhiroop Mukherjee (510510109), Debarghya Dey (510519087),
     Jyotiprakash Roy \\(510519016), and Shrutanten (510519048) from the Prestigious Department of \\Computer Science And Technology
     of the Distinguished and Respected IIEST Shibpur under my guidance.
@@ -241,8 +241,6 @@ That is where out journey to build a social distance checker started.
 
 Before we settled on the topic of object detection and started building this project, we got some practice, which was necessary since we were going to dip our toes in image processing.
 
-\subsection{Histogram}
-
 \begin{itemize}
     \item We made histograms for grey-level images. This was done using both the OpenCV's \textcolor{brown}{\textit{ravel()}} function and our own implementation of it, called \textcolor{brown}{\textit{compute\_histogram()}}
     \begin{figure}[h!]
@@ -326,7 +324,7 @@ Before we settled on the topic of object detection and started building this pro
 
     \pagebreak
 
-    \item Then we implemented Otsu's Thresholding algorithm \cite{4310076} using minimization of within class variance approach. 
+    \item Then we implemented Otsu's Thresholding Algorithm \cite{4310076} using minimization of within class variance approach. 
 
     \lstinputlisting[caption=Our Implementation Of Otsu's Thresholding Algorithm, label=lst:Otsu Algo]{python scripts/otsu_thresholding.py}
     
@@ -385,7 +383,7 @@ working. These are:
 The softwares used to build this \textit{checker} are:
 
 \subsubsection{An Integrated Development Environment (IDE)}
-An integrated development environment (IDE) is a software application that
+An Integrated Development Environment (IDE) is a software application that
 provides comprehensive facilities to computer programmers for software
 development. An IDE normally consists of at least a source code editor, build
 automation tools and a debugger. Some IDEs contain the necessary compiler,
@@ -396,7 +394,7 @@ We used PyCharm as our IDE, as it was easy to set up and code
 \href{https://www.jetbrains.com/pycharm/}{PyCharm} is an integrated development environment (IDE) used in computer programming, specifically for the Python language. It is developed by the Czech company JetBrains. It provides code analysis, a graphical debugger, an integrated unit tester, integration with version control systems (VCSes), and supports web development with Django as well as data science with Anaconda.
 
 \subsubsection{Python}
-Python is an interpreted, high-level and general-purpose programming language.
+\href{https://www.python.org/}{Python} is an interpreted, high-level and general-purpose programming language.
 Python's design philosophy emphasizes code readability with its notable use of
 significant whitespace. Its language constructs and object-oriented approach aim
 to help programmers write clear, logical code for small and large-scale projects.
@@ -420,12 +418,12 @@ to help programmers write clear, logical code for small and large-scale projects
 After working on the project for quite some time, we realized that we did
 not have enough hardware resources at out disposal to actually make the
 \textit{checker} work smoothly. So we decided on shifting to Google Colab.
-Google colab is an online iPython development environment similar to
-Jupyter Notebook. It uses CUDA acceleration to speed up processes, so we
+\href{https://colab.research.google.com/notebooks/intro.ipynb}{Google Colab} is an online iPython development environment similar to
+\href{https://jupyter.org/}{Jupyter Notebook}. It uses CUDA acceleration to speed up processes, so we
 switched to it rather than continuing development
 
 \subsubsection{\LaTeX}
-\LaTeX was used to write this report. \LaTeX is a software system for document
+\LaTeX\ was used to write this report. \LaTeX\ is a software system for document
 preparation. When writing, the writer uses plain text as opposed to the formatted
 text found in "What You See Is What You Get" word processors like Microsoft Word
 or LibreOffice Writer.
@@ -496,7 +494,7 @@ How we proceeded with the outlines of the blueprint:
           \pagebreak
     \item Processing
           \begin{itemize}[label={}]
-              \item We used the OpenCV library for our video/image processing. It is a really handy library that can be used for image processing, object detection and many other purposes.
+              \item We used the \href{https://opencv.org/}{OpenCV} library for our video/image processing. It is a really handy library that can be used for image processing, object detection and many other purposes.
                     \lstinputlisting[caption=A Sample Code To Count No. Of Frames in a Video, label=lst:VideoFrames]{python scripts/total_frames.py}
           \end{itemize}
 
@@ -504,12 +502,14 @@ How we proceeded with the outlines of the blueprint:
           \begin{itemize}
               \item For this we decided to go with the You Only Look Once (YOLO) algorithm for object detection. The algorithm itself is discussed a bit later in the report.
               \item We did not train the object detection neural network model ourselves. We used the prebuilt model, trained by the \href{https://pjreddie.com/darknet/yolo/}{Darknet} team because of time constraints.
+              \lstinputlisting[caption=Our Implementation of Object(Human) Detection using YOLO. label=lst:YOLO]{python scripts/yolo_detection.py}
           \end{itemize}
 
     \item Measuring distance between each couple
           \begin{itemize}
               \item This was undeniably the toughest part of the project and took the longest time. First we decided to go with measuring the distance between the centroids of every two detections. But that may not work in every condition since it depends on the placement of camera and the view angle from the ground and perpendicular to the ground.
               \item A conversion of the 3-dimensional footage being fed to the algorithm to 2-dimensions was more than necessary to get the top view of every frame to avoid the \textit{viewing angle problem}.
+              \pagebreak
               \item Enter \textbf{Bird's Eye View (BEV)}. This is what we called the top view of every frame. This was made possible by OpenCV's \textcolor{brown}{\texttt{getPerspectiveTransform()}} and \textcolor{brown}{\texttt{warpPerspective()}} functions.
                     \lstinputlisting[caption=Function Bird's Eye Perspective Transformation Matrix, label=lst:BirdsEyePerspective]{python scripts/birds_eye_perspective.py}
               \item This piece of code essentially calculates what is called a \textit{transformation matrix}\cite{kriegman2007homography} for the supplied image (frame) which can then be used to get the centroids of the points as seen from a vertical position directly above the center of the rectangle passed to the function.
@@ -520,35 +520,42 @@ How we proceeded with the outlines of the blueprint:
     \item Mark the violations
           \begin{itemize}[label={}]
               \item This was again a fairly easy step. We just needed the coordinates of the people in the \textit{violation zone} and make their detection rectangle red as opposed to green.
+              \lstinputlisting[caption=Our Implementation to Process the Input Video, label=lst:VideoDetection]{python scripts/video_detection.py}
+              \begin{figure}[h!]
+                  \centering
+                  \includegraphics[width=\linewidth]{Pictures/sample output0.png}
+                  \caption{A Still from Output Video}
+                  \label{fig:OutputVid}
+              \end{figure}
           \end{itemize}
 \end{enumerate}
-
+\pagebreak
 \subsection{The YOLO Algorithm}
 
 \subsubsection{What is YOLO Algorithm?}
 
 \begin{itemize}
     \item \textbf{YOLO (“You Only Look Once”)}\cite{redmon2016look}\cite{redmon2018yolov3} is an effective real-time \textbf{object recognition} algorithm, first described in the seminal 2015 paper by Joseph Redmon et al.
-    \item \textbf{Image classification} done by YOLO algorithm aims at assigning an image to one of a number of different categories (e.g. car, dog, cat, human, etc.), essentially answering the question “What is in this picture?”. One image has only one category assigned to it.
-    \item \textbf{Object localization} then allows us to locate our object in the image, so our question changes to “Where is it?”.
-    \item \textbf{Object detection} provides the tools for doing just that –  finding all the objects in an image and drawing the so-called bounding boxes around them.
+    \item \textbf{Image Classification} done by YOLO algorithm aims at assigning an image to one of a number of different categories (e.g. car, dog, cat, human, etc.), essentially answering the question “What is in this picture?”. One image has only one category assigned to it.
+    \item \textbf{Object Localization} then allows us to locate our object in the image, so our question changes to “Where is it?”.
+    \item \textbf{Object Detection} provides the tools for doing just that –  finding all the objects in an image and drawing the so-called bounding boxes around them.
     \begin{figure}[h!]
         \centering
-        \includegraphics[width=0.4\linewidth]{Pictures/Detected-with-YOLO--Schreibtisch-mit-Objekten.jpg}
+        \includegraphics[width=0.9\linewidth]{Pictures/Detected-with-YOLO--Schreibtisch-mit-Objekten.jpg}
         \caption{\href{https://en.wikipedia.org/wiki/Object_detection}{Sample Output}  Of YOLOv3}
         \label{fig:YOLOv3Sample}
     \end{figure}
 \end{itemize}
 
-\subsubsection{Where does YOLO stand in the \textit{object detection algorithms} chart?}
+\subsubsection{Different Types Of \textit{Object Detection Algorithms}}
 There are a few different algorithms for object detection and they can be split into two groups:
 \begin{enumerate}
-    \item \textbf{Algorithms based on classification}
+    \item \textbf{Algorithms based on Classification}
           \begin{itemize}[label={}]
               \item They are implemented in two stages. First, they select regions of interest in an image. Second, they classify these regions using convolutional neural networks. This solution can be slow because we have to run predictions for every selected region. A widely known example of this type of algorithm is the Region-based convolutional neural network (RCNN) and its cousins Fast-RCNN, Faster-RCNN and the latest addition to the family: Mask-RCNN. Another example is RetinaNet.
           \end{itemize}
 
-    \item \textbf{Algorithms based on regression}
+    \item \textbf{Algorithms based on Regression}
           \begin{itemize}[label={}]
               \item Instead of selecting interesting parts of an image, these predict classes and bounding boxes for the whole image in one run of the algorithm. The two best known examples from this group are the \textbf{YOLO \textit{(it stands here)}} family algorithms and SSD (Single Shot Multibox Detector). They are commonly used for real-time object detection as, in general, they trade a bit of accuracy for large improvements in speed.
           \end{itemize}
@@ -565,7 +572,7 @@ To understand the YOLO algorithm, it is necessary to establish what is actually 
     \item The probability that there is an object bounding the box (pc)
 \end{enumerate}
 
-\begin{figure}[h!]
+\begin{figure}[h]
     \centering
     \includegraphics[width=0.9\linewidth]{Pictures/yoloWorks1.png}
     \caption{Descriptions of a Bounding Box}
@@ -620,6 +627,7 @@ A few of these limitations can be solved by adopting the following means:
 \begin{enumerate}
     \item Recording via a drone can completely eliminate the \textit{viewing angle problem}, since a drone can be stabilized at exactly 90 degrees to the ground. Indoors, a camera at the center of the ceiling will work wonders.
     \item The \textit{checker} can work in densely populated areas as well if we use RCNN or any classification based algorithm. But that will further slow down the \textit{checker} since RCNN is a much slower algorithm than YOLO.
+    \pagebreak
     \item \textbf{Non-Maxima Suppression Analysis}
     \begin{itemize}
         \item To make the algorithm work in relatively dense and overpopulated areas, we were suggested to adjust the Non-Maxima Suppression (NMS) threshold by Prof. Samit Biswas. 
