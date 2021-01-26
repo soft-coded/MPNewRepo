@@ -61,7 +61,7 @@
 
 \usepackage{hyperref}
 
-% \usepackage[nottoc]{tocbibind}
+\usepackage[nottoc, numbib]{tocbibind}
 
 \begin{document}
 \begin{titlepage}
@@ -666,7 +666,7 @@ With that being said, here is how we can improve the \textit{checker}:
     \item We can add a help panel for first time users.
 \end{enumerate}
 
-\section{BIBLIOGRAPHY}
+\renewcommand{\refname}{REFERENCES}
 \bibliographystyle{ieeetr}
 \bibliography{mp}
 
