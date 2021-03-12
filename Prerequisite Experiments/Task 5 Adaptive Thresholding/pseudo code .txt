@@ -1,0 +1,8 @@
+input blocksize (n) , subtracting value (c)
+
+for every n*n block in image:
+    calculate mean of values of the block(m)
+    threshold = mean - c
+    binarise the block using threshold
+
+save new image
