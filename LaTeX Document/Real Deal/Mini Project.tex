@@ -494,7 +494,7 @@ How we proceeded with the outlines of the blueprint:
               \item For this we decided to go with the You Only Look Once (YOLO) algorithm for object detection. The algorithm itself is discussed a bit later in the report.
               \item We did not train the object detection neural network model ourselves. We used the prebuilt model, trained by the \href{https://pjreddie.com/darknet/yolo/}{Darknet} team because of time constraints.
 			\item The script that we wrote for our implementation of the YOLO algorithm:
-              \lstinputlisting[caption=Our implementation of object (people) detection using YOLO. label=lst:YOLO]{python scripts/yolo_detection.py}
+              \lstinputlisting[caption=Our implementation of object (people) detection using YOLO, label=lst:YOLO]{python scripts/yolo_detection.py}
           \end{itemize}
 
     \item Measuring distance between each couple
@@ -515,7 +515,7 @@ How we proceeded with the outlines of the blueprint:
 		\end{itemize}
 	\item The final result
 		\begin{itemize}[label={}]
-			\item The end result of days of hard work and patience was the following program:
+			\item We were able to process video in around \textbf{10 fps}. The end result of days of hard work and patience was the following program:
     			\lstinputlisting[caption=Our implementation to process the input video, label=lst:VideoDetection]{python scripts/video_detection.py}
          		\begin{figure}[h!]
             		 \centering
